@@ -1,0 +1,70 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+-- Thông báo chào mừng khi chạy Script
+Rayfield:Notify({
+    Title = "Chào mừng bạn đến với VinhHubdepzai!",
+    Content = "Script Anti-AFK đã sẵn sàng. Chúc bạn chơi game vui vẻ!",
+    Duration = 5,
+    Image = 4483362458,
+    Actions = {
+        Ignore = {
+            Name = "Cảm ơn!",
+            Callback = function()
+                print("Người dùng đã đóng thông báo.")
+            end
+        },
+    },
+})
+
+local Window = Rayfield:CreateWindow({
+    Name = "🔥 VinhHubdepzai | Anti-AFK System",
+    LoadingTitle = "Đang tải VinhHub...",
+    LoadingSubtitle = "by Vinh Đẹp Trai",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = "VinhHubConfig",
+        FileName = "AntiAFK"
+    },
+    KeySystem = false 
+})
+
+local Tab = Window:CreateTab("Chính", 4483362458) 
+
+local AntiAfkEnabled = false
+
+local Toggle = Tab:CreateToggle({
+    Name = "Bật/Tắt Anti-AFK",
+    CurrentValue = false,
+    Flag = "AntiAFK_Toggle", 
+    Callback = function(Value)
+        AntiAfkEnabled = Value
+        if AntiAfkEnabled then
+            Rayfield:Notify({
+                Title = "Thông báo",
+                Content = "Đã BẬT Anti-AFK. Bạn sẽ không bị kick!",
+                Duration = 2,
+                Image = 4483362458,
+            })
+        else
+            Rayfield:Notify({
+                Title = "Thông báo",
+                Content = "Đã TẮT Anti-AFK.",
+                Duration = 2,
+                Image = 4483362458,
+            })
+        end
+    end,
+})
+
+-- Logic xử lý Anti-AFK (Ngăn chặn IDLE)
+local VirtualUser = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:Connect(function()
+    if AntiAfkEnabled then
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+        print("Đã ngăn chặn treo máy lúc: " .. os.date("%H:%M:%S"))
+    end
+end)
+
+Tab:CreateSection("Thông tin")
+Tab:CreateLabel("Script thiết kế bởi VinhHubdepzai")
