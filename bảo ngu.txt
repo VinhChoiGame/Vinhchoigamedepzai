@@ -1,0 +1,57 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- DANH SÁCH CÂU KICK
+local messages = {
+	"Ngu thì nghỉ chơi đi 🤡",
+	"IQ thấp detected 💀",
+	"Trình này out cho khỏe 😎",
+	"có làm mới có ăn ko tiền thì biến",
+	"Chơi ngu quá, bay nhé 😈"
+}
+
+-- GUI
+local gui = Instance.new("ScreenGui")
+gui.Name = "JumpscareKick"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(1,0,1,0)
+frame.BackgroundColor3 = Color3.new(0,0,0)
+frame.Visible = false
+frame.ZIndex = 10
+
+local img = Instance.new("ImageLabel", frame)
+img.Size = UDim2.new(1,0,1,0)
+img.BackgroundTransparency = 1
+img.Image = "rbxassetid://9120465606" -- 🔁 đổi ảnh hù ở đây
+img.ZIndex = 11
+
+local text = Instance.new("TextLabel", frame)
+text.Size = UDim2.new(1,0,0.18,0)
+text.Position = UDim2.new(0,0,0.82,0)
+text.BackgroundTransparency = 1
+text.TextScaled = true
+text.Font = Enum.Font.GothamBlack
+text.TextColor3 = Color3.fromRGB(255,0,0)
+text.ZIndex = 12
+
+-- NÚT KÍCH HOẠT
+local btn = Instance.new("TextButton", gui)
+btn.Size = UDim2.new(0,220,0,60)
+btn.Position = UDim2.new(0.5,-110,0.75,0)
+btn.Text = "HÙ + BAY 💀"
+btn.TextScaled = true
+btn.Font = Enum.Font.GothamBold
+btn.BackgroundColor3 = Color3.fromRGB(160,30,30)
+btn.TextColor3 = Color3.new(1,1,1)
+btn.ZIndex = 13
+
+btn.MouseButton1Click:Connect(function()
+	local msg = messages[math.random(1,#messages)]
+	text.Text = msg
+	frame.Visible = true
+	task.wait(3) -- thời gian hù (giây)
+	player:Kick(msg)
+end)
